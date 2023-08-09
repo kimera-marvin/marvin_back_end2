@@ -149,6 +149,36 @@ exports.update_student = (req, res) => {
     });
 }; 
 
+// delete all students
+exports.delete_all_students =(req,res)=>{
+    Student.destroy({
+        where:{},
+        truncate: false
+    })
+        .then(num =>{
+            if(num >0){
+                res.send({
+                    status: 100,
+                    status_message: "sucess",
+                    message: "sucessivelly deleted all students",
+                });
+            }
+            else {
+                res.send({
+                    status: 400,
+                    status_message: "Error",
+                    message: " unable to delete all students"
+                });
+            }
+        })
+        .catch(err=>{
+            res.send({
+                status: 500,
+                status_message: "Error",
+                message: `Error message is ${err}`
+            });
+        });
+}
 // Delete Student by id
 exports.delete_student = (req, res) => {
     const id = req.params.id;
